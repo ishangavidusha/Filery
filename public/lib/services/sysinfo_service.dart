@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'package:fileryapp/models/system_infomation.dart';
 import 'package:fileryapp/utils/filery_log.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,15 +7,15 @@ import 'package:socket_io_client/socket_io_client.dart';
 class SysInfoService with ChangeNotifier {
   Socket _socket = io(
     kReleaseMode ? Uri.base.origin : "http://localhost:5000",
-    OptionBuilder().setTransports(['websocket']).setPath("/sysinfo").enableForceNewConnection().disableAutoConnect().build()
+    OptionBuilder().enableForceNewConnection().disableAutoConnect().build()
   );
   final rangeLimit = 10;
-  Map<String, dynamic> _sysData = {};
   bool _isConected = false;
+  SystemInfomation _systemInfomation = SystemInfomation();
 
   bool get conected => _isConected;
 
-  Map<String, dynamic> get sysData => _sysData;
+  SystemInfomation get sysData => _systemInfomation;
 
   void conect() async {
     FileryLog.v("SocketIo Conection Starting...");
@@ -32,8 +32,8 @@ class SysInfoService with ChangeNotifier {
     _socket.emit("sysdata", { "msg": "Hello Server" });
 
     _socket.on("sysdata", (data) {
-      _sysData = jsonDecode(data);
-      FileryLog.ok(_sysData.toString());
+      _systemInfomation = SystemInfomation.fromJson(data);
+      FileryLog.ok(_systemInfomation.info!.bootTime.toString());
       notifyListeners();
     });
 
