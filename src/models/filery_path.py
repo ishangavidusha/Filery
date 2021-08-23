@@ -1,6 +1,6 @@
 import os
-from app.models.filery_file import FileryFile
-from app.models.filery_folder import FileryFolder
+from src.models.filery_file import FileryFile
+from src.models.filery_folder import FileryFolder
 import shutil
 
 

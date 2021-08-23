@@ -1,6 +1,6 @@
 import json
 from flask import Response
-from app.utils.sys_info_data import sysInfo
+from src.utils.sys_info_data import sysInfo
 
 def getSysInfoStream():
     def getData():

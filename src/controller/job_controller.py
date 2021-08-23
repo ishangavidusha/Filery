@@ -1,4 +1,4 @@
-from app.models.jobs import Job
+from src.models.jobs import Job
 from flask_jwt_extended import jwt_required
 from flask import request
 from flask_restful import Resource

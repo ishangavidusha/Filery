@@ -1,5 +1,5 @@
 from flask_jwt_extended import jwt_required
-from app.models.filery_path import FileryPath
+from src.models.filery_path import FileryPath
 from flask import request
 from flask_restful import Resource
 import os

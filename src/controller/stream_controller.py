@@ -4,8 +4,8 @@ import json
 import time
 from config.database import db
 from flask import Response, request
-from app.utils.rsync_progress import getRsyncProgress
-from app.models.jobs import Job
+from src.utils.rsync_progress import getRsyncProgress
+from src.models.jobs import Job
 
 def jobProgressStream():
     def streamData():
