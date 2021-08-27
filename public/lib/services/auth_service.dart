@@ -79,7 +79,7 @@ class AuthService extends ChangeNotifier {
         notifyListeners();
       }
 
-      await _isUserAailable(_currentSession?.data.user.id);
+      //await _isUserAailable(_currentSession?.data.user.id);
     } catch (e) {
       _currentSession = null;
       notifyListeners();

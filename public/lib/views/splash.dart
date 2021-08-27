@@ -3,10 +3,10 @@ import 'package:fileryapp/utils/appColors.dart';
 import 'package:fileryapp/utils/filery_log.dart';
 import 'package:fileryapp/views/auth/init_admin.dart';
 import 'package:fileryapp/views/auth/login_view.dart';
+import 'package:fileryapp/views/components/filery_text.dart';
 import 'package:fileryapp/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({ Key? key }) : super(key: key);
@@ -37,6 +37,8 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
+    double devHeight = MediaQuery.of(context).size.height;
+    double devWidth = MediaQuery.of(context).size.width;
     return FutureBuilder(
       future: checkLogin(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -46,7 +48,7 @@ class _SplashViewState extends State<SplashView> {
             body: Stack(
               children: [
                 Positioned(
-                  top: 40.h,
+                  bottom: devHeight * 0.2,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
@@ -67,15 +69,19 @@ class _SplashViewState extends State<SplashView> {
             body: Stack(
               children: [
                 Positioned(
-                  top: 40.h,
+                  bottom: devHeight * 0.2,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
-                      Text(
-                        errorText,
-                        style: TextStyle(
-                          fontSize: 6.sp,
-                          color: AppColors.minorTextColor,
+                      Flexible(
+                        child: FText( 
+                          text: errorText,
+                          maxLines: 2,
+                          fontSize: 0.015,
+                          textOverflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: AppColors.minorTextColor,
+                          ),
                         ),
                       ),
                     ],
