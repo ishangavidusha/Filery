@@ -1,4 +1,4 @@
-from app.models.user import SecUsers
+from src.models.user import SecUsers
 from config.database import db
 from flask import request
 from flask_jwt_extended import create_refresh_token, create_access_token, jwt_required, get_jwt_identity
