@@ -1,10 +1,10 @@
 import 'package:cupertino_rounded_corners/cupertino_rounded_corners.dart';
 import 'package:fileryapp/services/auth_service.dart';
-import 'package:fileryapp/utils/customButton.dart';
-import 'package:fileryapp/utils/textField.dart';
+import 'package:fileryapp/views/components/customButton.dart';
+import 'package:fileryapp/views/components/textField.dart';
+import 'package:fileryapp/views/components/filery_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fileryapp/utils/appColors.dart';
-import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
 
 class InitAdminView extends StatefulWidget {
@@ -68,6 +68,8 @@ class _InitAdminViewState extends State<InitAdminView> {
 
   @override
   Widget build(BuildContext context) {
+    double devHeight = MediaQuery.of(context).size.height;
+    double devWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -87,13 +89,9 @@ class _InitAdminViewState extends State<InitAdminView> {
                   shape: SquircleBorder(
                     radius: BorderRadius.circular(80),
                   ),
-                  gradient: LinearGradient(
-                    colors: AppColors.cardGradeantColors,
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter
-                  ),
+                  color: AppColors.backgroundColor,
                   shadows: [
-                    AppColors.boxShadow,
+                    AppColors.normalShadow,
                   ],
                 ),
                 child: Column(
@@ -104,25 +102,25 @@ class _InitAdminViewState extends State<InitAdminView> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.file_download, color: AppColors.mainTextColor, size: 16.sp,),
+                        Icon(Icons.file_download, color: AppColors.highLightColor, size: AppColors.getFontSize(devWidth, 0.08),),
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          "Filery",
+                        FText(
+                          text: "Filery",
+                          fontSize: 0.06,
                           style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.mainTextColor,
+                            color: AppColors.highLightColor,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 4 
                           ),
                         ),
                       ],
                     ),
-                    Text(
-                      "Create Admin Account",
+                    FText(
+                      text: "Create Admin Account",
+                      fontSize: 0.03,
                       style: TextStyle(
-                        fontSize: 10.sp,
                         color: AppColors.minorTextColor,
                       ),
                     ),
@@ -130,10 +128,10 @@ class _InitAdminViewState extends State<InitAdminView> {
                       height: 20,
                     ),
 
-                    Text(
-                      "Name",
+                    FText(
+                      text: "Name",
+                      fontSize: 0.015,
                       style: TextStyle(
-                        fontSize: 6.sp,
                         color: AppColors.minorTextColor,
                       ),
                     ),
@@ -143,15 +141,15 @@ class _InitAdminViewState extends State<InitAdminView> {
                       textEditingController: fullNameEditingController,
                       backgroundColor: Colors.transparent,
                       backgroundFocusColor: Colors.white.withOpacity(0.1),
-                      icon: Icon(Icons.person, color: AppColors.minorTextColor, size: 10.sp,),
-                      focusIcon: Icon(Icons.person, color: AppColors.mainTextColor, size: 12.sp,),
+                      icon: Icon(Icons.person, color: AppColors.minorTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
+                      focusIcon: Icon(Icons.person, color: AppColors.mainTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
                       textStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.mainTextColor,
                       ),
                       hintText: "Enter your name",
                       hintTextStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.minorTextColor,
                       ),
                       onTap: () {
@@ -165,10 +163,10 @@ class _InitAdminViewState extends State<InitAdminView> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "Username",
+                    FText(
+                      text: "Username",
+                      fontSize: 0.015,
                       style: TextStyle(
-                        fontSize: 6.sp,
                         color: AppColors.minorTextColor,
                       ),
                     ),
@@ -178,15 +176,15 @@ class _InitAdminViewState extends State<InitAdminView> {
                       textEditingController: usernameEditingController,
                       backgroundColor: Colors.transparent,
                       backgroundFocusColor: Colors.white.withOpacity(0.1),
-                      icon: Icon(Icons.person, color: AppColors.minorTextColor, size: 10.sp,),
-                      focusIcon: Icon(Icons.person, color: AppColors.mainTextColor, size: 12.sp,),
+                      icon: Icon(Icons.person, color: AppColors.minorTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
+                      focusIcon: Icon(Icons.person, color: AppColors.mainTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
                       textStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.mainTextColor,
                       ),
                       hintText: "Enter new username",
                       hintTextStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.minorTextColor,
                       ),
                       onTap: () {
@@ -200,10 +198,10 @@ class _InitAdminViewState extends State<InitAdminView> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "Password",
+                    FText(
+                      text: "Password",
+                      fontSize: 0.015,
                       style: TextStyle(
-                        fontSize: 6.sp,
                         color: AppColors.minorTextColor,
                       ),
                     ),
@@ -213,16 +211,16 @@ class _InitAdminViewState extends State<InitAdminView> {
                       textEditingController: passwordEditingController,
                       backgroundColor: Colors.transparent,
                       backgroundFocusColor: Colors.white.withOpacity(0.1),
-                      icon: Icon(Icons.password, color: AppColors.minorTextColor, size: 10.sp,),
-                      focusIcon: Icon(Icons.password, color: AppColors.mainTextColor, size: 12.sp,),
+                      icon: Icon(Icons.password, color: AppColors.minorTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
+                      focusIcon: Icon(Icons.password, color: AppColors.mainTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
                       textStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.mainTextColor,
                       ),
                       obscureText: true,
                       hintText: "Enter new password",
                       hintTextStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.minorTextColor,
                       ),
                       onTap: () {
@@ -238,11 +236,16 @@ class _InitAdminViewState extends State<InitAdminView> {
                     SizedBox(
                       height: 20,
                     ),
-                    errorText.isNotEmpty ? Text(
-                      errorText,
-                      style: TextStyle(
-                        fontSize: 6.sp,
-                        color: Colors.red,
+                    errorText.isNotEmpty ? Flexible(
+                      child: FText(
+                        text: errorText,
+                        fontSize: 0.015,
+                        maxLines: 2,
+                        textOverflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 6,
+                          color: Colors.red,
+                        ),
                       ),
                     ) : SizedBox(),
                     SizedBox(
@@ -251,7 +254,7 @@ class _InitAdminViewState extends State<InitAdminView> {
                     RoundedButtonWidget(
                       width: 400,
                       buttonText: "Sign Up",
-                      textSize: 6.sp,
+                      textSize: AppColors.getFontSize(devWidth, 0.015),
                       onpressed: () async {
                         register();
                       },

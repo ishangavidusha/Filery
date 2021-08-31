@@ -1,10 +1,10 @@
 import 'package:cupertino_rounded_corners/cupertino_rounded_corners.dart';
 import 'package:fileryapp/services/auth_service.dart';
-import 'package:fileryapp/utils/customButton.dart';
-import 'package:fileryapp/utils/textField.dart';
+import 'package:fileryapp/views/components/customButton.dart';
+import 'package:fileryapp/views/components/textField.dart';
+import 'package:fileryapp/views/components/filery_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fileryapp/utils/appColors.dart';
-import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -63,6 +63,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    double devWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -82,13 +83,9 @@ class _LoginViewState extends State<LoginView> {
                   shape: SquircleBorder(
                     radius: BorderRadius.circular(80),
                   ),
-                  gradient: LinearGradient(
-                    colors: AppColors.cardGradeantColors,
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter
-                  ),
+                  color: AppColors.backgroundColor,
                   shadows: [
-                    AppColors.boxShadow,
+                    AppColors.normalShadow,
                   ],
                 ),
                 child: Column(
@@ -99,35 +96,35 @@ class _LoginViewState extends State<LoginView> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.file_download, color: AppColors.mainTextColor, size: 16.sp,),
+                        Icon(Icons.file_download, color: AppColors.highLightColor, size: AppColors.getFontSize(devWidth, 0.08),),
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          "Filery",
+                        FText(
+                          text: "Filery",
+                          fontSize: 0.06,
                           style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.mainTextColor,
+                            color: AppColors.highLightColor,
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 4 
+                            letterSpacing: 2
                           ),
                         ),
                       ],
                     ),
-                    Text(
-                      "Log In To Filery",
+                    FText(
+                      text: "Log In To Filery",
+                      fontSize: 0.03,
                       style: TextStyle(
-                        fontSize: 10.sp,
                         color: AppColors.minorTextColor,
                       ),
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      "Username",
+                    FText(
+                      text: "Username",
+                      fontSize: 0.015,
                       style: TextStyle(
-                        fontSize: 6.sp,
                         color: AppColors.minorTextColor,
                       ),
                     ),
@@ -137,15 +134,15 @@ class _LoginViewState extends State<LoginView> {
                       textEditingController: usernameEditingController,
                       backgroundColor: Colors.transparent,
                       backgroundFocusColor: Colors.white.withOpacity(0.1),
-                      icon: Icon(Icons.person, color: AppColors.minorTextColor, size: 10.sp,),
-                      focusIcon: Icon(Icons.person, color: AppColors.mainTextColor, size: 12.sp,),
+                      icon: Icon(Icons.person, color: AppColors.minorTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
+                      focusIcon: Icon(Icons.person, color: AppColors.mainTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
                       textStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.mainTextColor,
                       ),
                       hintText: "Enter your username",
                       hintTextStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.minorTextColor,
                       ),
                       onTap: () {
@@ -159,10 +156,10 @@ class _LoginViewState extends State<LoginView> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "Password",
+                    FText(
+                      text: "Password",
+                      fontSize: 0.015,
                       style: TextStyle(
-                        fontSize: 6.sp,
                         color: AppColors.minorTextColor,
                       ),
                     ),
@@ -172,16 +169,16 @@ class _LoginViewState extends State<LoginView> {
                       textEditingController: passwordEditingController,
                       backgroundColor: Colors.transparent,
                       backgroundFocusColor: Colors.white.withOpacity(0.1),
-                      icon: Icon(Icons.password, color: AppColors.minorTextColor, size: 10.sp,),
-                      focusIcon: Icon(Icons.password, color: AppColors.mainTextColor, size: 12.sp,),
+                      icon: Icon(Icons.password, color: AppColors.minorTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
+                      focusIcon: Icon(Icons.password, color: AppColors.mainTextColor, size: AppColors.getFontSize(devWidth, 0.015),),
                       textStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.mainTextColor,
                       ),
                       obscureText: true,
                       hintText: "Enter your password",
                       hintTextStyle: TextStyle(
-                        fontSize: 6.sp,
+                        fontSize: AppColors.getFontSize(devWidth, 0.015),
                         color: AppColors.minorTextColor,
                       ),
                       onTap: () {
@@ -197,11 +194,15 @@ class _LoginViewState extends State<LoginView> {
                     SizedBox(
                       height: 20,
                     ),
-                    errorText.isNotEmpty ? Text(
-                      errorText,
-                      style: TextStyle(
-                        fontSize: 6.sp,
-                        color: Colors.red,
+                    errorText.isNotEmpty ? Flexible(
+                      child: FText(
+                        text: errorText,
+                        maxLines: 2,
+                        textOverflow: TextOverflow.ellipsis,
+                        fontSize: 0.015,
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
                       ),
                     ) : SizedBox(),
                     SizedBox(
@@ -210,7 +211,7 @@ class _LoginViewState extends State<LoginView> {
                     RoundedButtonWidget(
                       width: 400,
                       buttonText: "Log In",
-                      textSize: 6.sp,
+                      textSize: AppColors.getFontSize(devWidth, 0.015),
                       onpressed: () async {
                         login();
                       },

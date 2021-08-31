@@ -50,14 +50,10 @@ class _DrawerButtonState extends State<DrawerButton> {
           duration: Duration(milliseconds: 200),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           margin: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-            color: isHovered ? AppColors.backgroundColor : AppColors.lightBackgroundColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(widget.icon, color: AppColors.minorTextColor, size: 16,),
+              Icon(widget.icon, color: isHovered ? AppColors.mainTextColor : widget.indexValue == widget.selectedValue ? AppColors.highLightColor : AppColors.minorTextColor, size: 16,),
               SizedBox(
                 width: 10,
               ),
@@ -65,7 +61,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                 widget.text,
                 style: TextStyle(
                   fontSize: 14,
-                  color: AppColors.minorTextColor,
+                  color: isHovered ? AppColors.mainTextColor : widget.indexValue == widget.selectedValue ? AppColors.highLightColor : AppColors.minorTextColor,
                   fontWeight: widget.indexValue == widget.selectedValue ? FontWeight.bold : FontWeight.normal,
                   letterSpacing: 2
                 ),

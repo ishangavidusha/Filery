@@ -1,3 +1,4 @@
+import 'package:fileryapp/utils/appColors.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButtonWidget extends StatelessWidget {
@@ -26,7 +27,7 @@ class RoundedButtonWidget extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         boxShadow: [
-          BoxShadow(color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0),
+          BoxShadow(color: AppColors.buttonGradeantColors.first.withOpacity(0.4), offset: Offset(0, 4), blurRadius: 8.0,),
         ],
         gradient: LinearGradient(
           begin: Alignment.bottomRight,
@@ -60,7 +61,7 @@ class RoundedButtonWidget extends StatelessWidget {
             buttonText,
             style: TextStyle(
               fontSize: textSize,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
               color: Colors.white,
             ),
           ) : CircularProgressIndicator(
