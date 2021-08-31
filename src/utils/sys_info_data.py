@@ -2,11 +2,41 @@ import psutil
 
 INCLUDED_PARTITIONS = set(['/'])
 
+BYTES_SENT = 0.0
+BYTES_RECV = 0.0
+
+def getNetBandwith(inf = "eth0"):
+    global BYTES_SENT
+    global BYTES_RECV
+    net_stat = psutil.net_io_counters(pernic=True, nowrap=True)[inf]
+    sent = net_stat.bytes_sent
+    recv = net_stat.bytes_recv
+
+    net_in = round((recv - BYTES_RECV) / 1024 / 1024, 2)
+    net_out = round((sent - BYTES_SENT) / 1024 / 1024, 2)
+
+    result = {
+        "netIn": net_in,
+        "netOut": net_out
+    }
+
+    if BYTES_RECV == 0.0 and BYTES_SENT == 0.0:
+        result = {
+        "netIn": 0.0,
+        "netOut": 0.0
+    }
+
+    BYTES_SENT = sent
+    BYTES_RECV = recv
+    
+    return result
+
 def sysInfo():
     try:
         mem_data = psutil.virtual_memory()
         mem = {
             "total": mem_data.total,
+            "used": mem_data.used,
             "available": mem_data.available,
             "free": mem_data.free,
             "cached": mem_data.cached,
@@ -25,39 +55,6 @@ def sysInfo():
                     "used": usage.used
                 }
 
-        cpu_stats_data = psutil.cpu_stats()
-        cpu_stats = {
-            "ctxSwitches": cpu_stats_data.ctx_switches,
-            "interrupts": cpu_stats_data.interrupts,
-            "softInterrupts": cpu_stats_data.soft_interrupts,
-            "syscalls": cpu_stats_data.syscalls
-        }
-
-        disk_io_counters_data = psutil.disk_io_counters()
-        disk_io_counters = {
-            "readCount": disk_io_counters_data.read_count,
-            "writeCount": disk_io_counters_data.write_count,
-            "readBytes": disk_io_counters_data.read_bytes,
-            "writeBytes": disk_io_counters_data.write_bytes,
-            "readTime": disk_io_counters_data.read_time,
-            "writeTime": disk_io_counters_data.write_time,
-            "readMergedCount": disk_io_counters_data.read_merged_count,
-            "writeMergedCount": disk_io_counters_data.write_merged_count,
-            "busyTime": disk_io_counters_data.busy_time,
-        }
-
-        net_io_counters_data = psutil.net_io_counters()
-        net_io_counters = {
-            "bytesSent": net_io_counters_data.bytes_sent,
-            "bytesRecv": net_io_counters_data.bytes_recv,
-            "packetsSent": net_io_counters_data.packets_sent,
-            "packetsRecv": net_io_counters_data.packets_recv,
-            "errin": net_io_counters_data.errin,
-            "errout": net_io_counters_data.errout,
-            "dropin": net_io_counters_data.dropin,
-            "dropout": net_io_counters_data.dropout
-        }
-
         swap_memory_data = psutil.swap_memory()
         swap_memory = {
             "total": swap_memory_data.total,
@@ -71,11 +68,9 @@ def sysInfo():
         system = {
             'bootTime': psutil.boot_time(),
             'cpuCount': psutil.cpu_count(),
-            'cpuStats': cpu_stats,
-            'cpuLoad': psutil.cpu_percent(interval=1),
-            'diskIoCounters': disk_io_counters,
+            'cpuLoad': psutil.cpu_percent(),
             'diskUsage': disk_partitions,
-            'netIoCounters': net_io_counters,
+            'netIoCounters': getNetBandwith(),
             'swapMemory': swap_memory,
             'virtualMemory': mem
         }
@@ -84,12 +79,10 @@ def sysInfo():
         system = {
             'bootTime': None,
             'cpuCount': None,
-            'cpuStats': None,
             'cpuLoad': None,
-            'diskIoCounters': None,
             'diskUsage': None,
             'netIoCounters': None,
             'swapMemory': None,
-            'virtualMemory': None
+            'virtualMemory': None 
         }
         return system

@@ -6,8 +6,8 @@ from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from flask_cors import CORS
 from flask_restful import Api
-from flask_socketio import SocketIO, send, emit
-from time import sleep
+from flask_socketio import SocketIO, emit
+
 
 app = Flask(__name__, static_folder='public/build/web', static_url_path='/')
 api = Api(app)
@@ -37,25 +37,21 @@ def home():
 # gunicorn --worker-class eventlet -w 1 --reload --bind 0.0.0.0:5000 server:app
 
 @socketio.on('connect')
-def test_connect(data):
+def on_connect_call(data):
     print('Client Connected!')
-    
 
 @socketio.on('disconnect')
-def test_disconnect():
+def on_disconnect_call():
     print('Client disconnected!')
 
 @socketio.on('sysdata')
-def test_disconnect(data):
-    print(f'Got Some Data From Client: {data}')
-    while True:
-        data = {
-            "msg": "Server, System Infomation",
-            "info": sysInfo()
-        }
-        emit("sysdata", data)
-        sleep(1)
-
+def on_sys_data_call(data):
+    data = {
+        "msg": "Server System Statistics",
+        "info": sysInfo()
+    }
+    emit("sysdata", data)
+    
 @app.route('/api/stream', methods=['GET'])
 def get_user():
     return jobProgressStream()
@@ -64,6 +60,7 @@ def get_user():
 def get_sys():
     return getSysInfoStream()
 
+# API endpoints
 api.add_resource(Login, '/api/v1/auth/login')
 api.add_resource(Refresh, '/api/v1/auth/refresh-token')
 api.add_resource(SuperAdmin, '/api/v1/auth/signup')
@@ -71,7 +68,6 @@ api.add_resource(IsUser, '/api/v1/auth/isuser')
 api.add_resource(FileryDir, '/api/v1/browse')
 api.add_resource(Download, '/api/v1/download')
 api.add_resource(TaskJob, '/api/v1/task')
-
  
 if __name__ == "__main__":
     with app.app_context():
